@@ -9,9 +9,11 @@ Ambiente de Desenvolvimento: Windows 10
 
 Xampp versão 5.6.23 (https://www.apachefriends.org/pt_br/index.html)
 	- pacote composto pelo APACHE, MYSQL, PHP
-	Obs.: incluir a pasta <PASTA DO XAMPP>/php no PATH do Windows
+	
+	Obs.: incluir a pasta PASTA_DO_XAMPP/php no PATH do Windows
 
 Laravel (https://www.apachefriends.org/pt_br/index.html)
+	
 	Obs.: O laravel não precisa ser baixado, pois ele já se encontra no projeto
 
 
@@ -42,6 +44,7 @@ por exemplo:
 
 	http://nome_servidor:porta_servidor/API/label/palavra_busca
 	Onde: palavra_busca é uma palavra a ser buscada
-	Descrição: retorna um conjunto de cenas disponíveis no repositório que possuem a palavra_busca na descrição da cena
+	Descrição: retorna um conjunto de cenas disponíveis no repositório que possuem a palavra_busca na 
+	descrição da cena
 
 
