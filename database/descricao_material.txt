@@ -1,0 +1,21 @@
+            //material
+            $table->float('material_color_ambiente_r', 4,6);
+            $table->float('material_color_ambiente_g', 4,6);
+            $table->float('material_color_ambiente_b', 4,6);
+            $table->float('material_color_ambiente_a', 4,6);
+            $table->float('material_color_diffuse_r', 4,6);
+            $table->float('material_color_diffuse_g', 4,6);
+            $table->float('material_color_diffuse_b', 4,6);
+            $table->float('material_color_diffuse_a', 4,6);
+            $table->float('material_color_spot_r', 4,6);
+            $table->float('material_color_spot_g', 4,6);
+            $table->float('material_color_spot_b', 4,6);
+            $table->float('material_color_spot_a', 4,6);
+            $table->float('material_color_specular_r', 4,6);
+            $table->float('material_color_specular_g', 4,6);
+            $table->float('material_color_specular_b', 4,6);
+            $table->float('material_color_specular_a', 4,6);
+            $table->float('material_color_transparency_r', 4,6);
+            $table->float('material_color_transparency_g', 4,6);
+            $table->float('material_color_transparency_b', 4,6);
+            $table->float('material_color_transparency_a', 4,6);
