@@ -16,6 +16,14 @@ Laravel (https://www.apachefriends.org/pt_br/index.html)
 	
 	Obs.: O laravel não precisa ser baixado, pois ele já se encontra no projeto
 
+Banco de Dados sqlite (https://sqlite.org)
+
+	Obs.: Não precisa ser instalado, pois ele já se encontra no projeto
+
+	Pode utilizar o Sqlite Client que encontra-se na pasta PASTA_DO_XAMPP/MercuryMail para conectar no 
+	Banco de Dados que está sendo armazenado no arquivo /storage/database.sqlite
+
+
 
 ## Para "subir" o servidor web
 
