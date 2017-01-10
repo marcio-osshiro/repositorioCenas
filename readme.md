@@ -1,27 +1,47 @@
-## Laravel PHP Framework
+## Repositório de Cenas
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+Este repositório consiste de um cadastro de cenas e permite que as cenas do repositório sejam utilizados via API por diversos renderizadores de cenas. A utilização é através de chamadas AJAX que retorna um JSON.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+## Ferramentas utilizadas para o desenvolvimento
 
-## Official Documentation
+Ambiente de Desenvolvimento: Windows 10
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+Xampp versão 5.6.23 (https://www.apachefriends.org/pt_br/index.html)
+	- pacote composto pelo APACHE, MYSQL, PHP
+	Obs.: incluir a pasta <PASTA DO XAMPP>/php no PATH do Windows
 
-## Contributing
+Laravel (https://www.apachefriends.org/pt_br/index.html)
+	Obs.: O laravel não precisa ser baixado, pois ele já se encontra no projeto
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
 
-## Security Vulnerabilities
+## Para "subir" o servidor web
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+	php artisan serve --host="nome_servidor" --port="porta_servidor"
 
-### License
+por exemplo: 
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+	php artisan serve --host="192.168.1.10" --port=80
+
+
+
+## Para acessar o cadastro de cenas através do navegador web
+	
+	http://nome_servidor:porta_servidor/scene
+
+
+
+## A API oferece os seguintes serviços retornando um JSON
+	
+	http://nome_servidor:porta_servidor/API
+	Descrição: retorna um conjunto de cenas disponíveis no repositório
+
+	http://nome_servidor:porta_servidor/API/id/numero_cena
+	Onde: numero_cena representa o ID da cena
+	Descrição: retorna as informações da cena cujo ID é numero_cena
+
+	http://nome_servidor:porta_servidor/API/label/palavra_busca
+	Onde: palavra_busca é uma palavra a ser buscada
+	Descrição: retorna um conjunto de cenas disponíveis no repositório que possuem a palavra_busca na descrição da cena
+
+
