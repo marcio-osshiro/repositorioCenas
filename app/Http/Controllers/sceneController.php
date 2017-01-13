@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Scene;
+use Input;
 
 class sceneController extends Controller
 {
@@ -22,8 +23,16 @@ class sceneController extends Controller
 
     public function adiciona(Request $request){
         $id = $request->input('id', 0);
+        if ($request->hasFile('arquivo')) {
+            $file = $request->file('arquivo');
+            $random_name = str_random(8);
+            $destinationPath = 'textures/';
+            $extension = $file->getClientOriginalExtension();
+            $filename=$random_name.time().'.'.$extension;
+            $uploadSuccess = $request->file('arquivo')->move($destinationPath, $filename);
+            $request->merge( array( 'map_kd' => $filename ) );
+        }   
         Scene::updateOrCreate(['id'=> $id], $request->all());
-
         return redirect()
             ->action('sceneController@lista');
     }

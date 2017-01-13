@@ -14,7 +14,9 @@
 
 
 <div class="container">
-  <form action="/scene/adiciona" method="post">
+
+
+  <form action="/scene/adiciona" method="post" enctype="multipart/form-data">
   <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 
   <div class="form-group" style="visibility: hidden">
@@ -168,14 +170,35 @@
           <label>Material(insira o material no formato mtl, apenas sentença de cor e iluminação)</label>
           <textarea name="materials" class="form-control" rows="5" >{{ old('materials',$scene->materials) }}</textarea>
         </div>
+
+        <div class="form-group">
+          <label>Arquivo de textura</label>
+          @if ($scene->map_kd=="")
+            <img id = "imagem" src="" class="form-group">
+          @else
+            <img id = "imagem" src="/textures/{{$scene->map_kd}}" class="form-group">
+          @endif          
+          <input id="arquivo" name="arquivo" type="file" class="form-group" placeholder="Image">
+          <input id="map_kd" name="map_kd" class="form-control" value="{{ old('map_kd',$scene->map_kd) }}" 
+          type="hidden" />
+          <button type="button" onclick="removerTextura()">Remover textura</button>
+        </div>
       </div>
       </div>
     </div>
   </div> 
   <button type="submit" class="btn btn-primary btn-block">Salvar</button>
-  
+      
   </form>
 </div>
 
+<script>
+  function removerTextura() {
+    $("#map_kd").val('');
+    $("#arquivo").val('');
+    $("#imagem").attr('src', '');
 
+  }
+
+</script>
 @stop

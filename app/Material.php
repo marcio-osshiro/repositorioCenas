@@ -10,4 +10,5 @@ class Material
   	public $ks;
   	public $ns;
   	public $tr;
+  	public $map_kd;
 }

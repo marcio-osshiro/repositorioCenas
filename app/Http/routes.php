@@ -9,3 +9,7 @@
 	Route::get('/scene/edita/{scene}', 'sceneController@edita');
 	Route::get('/scene/remove/{scene}', 'sceneController@remove');
 	Route::post('/scene/adiciona', 'sceneController@adiciona');
+
+	Route::get('/info', function() {
+	  return phpinfo();
+	});
