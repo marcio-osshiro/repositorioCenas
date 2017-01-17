@@ -7,7 +7,14 @@ use Illuminate\Support\Facades\Db;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Scene;
-
+use App\Vec3;
+use App\Triangle;
+use App\Cena;
+use App\Camera;
+use App\Light;
+use App\Color;
+use App\Material;
+use App\Actor;
 
 class apiController extends Controller
 {
@@ -17,17 +24,17 @@ class apiController extends Controller
     }
 
     public function busca($id) {
-		$scene = App\Scene::find($id);
+		$scene = Scene::find($id);
 		$scene->numberOfVertices = 0;
 		$scene->numberOfNormals = 0;
 		$scene->numberOfTriangles = 0;
 		$scene->numberOfColors = 0;
 		$scene->numberOfTextures = 0;
-		tratarWaveFront($scene);
-		tratarMaterial($scene);
+		$this->tratarWaveFront($scene);
+		$this->tratarMaterial($scene);
 		unset($scene['waveFront']);
 		unset($scene['materials']);
-		$cena = setarCena($scene);
+		$cena = $this->setarCena($scene);
 	  	return $cena;
     }
 
@@ -38,39 +45,39 @@ class apiController extends Controller
 
 
 	private function setarCena($scene) {
-		$cena = new App\Cena();
+		$cena = new Cena();
 		$cena->id = $scene->id;
 		$cena->label = $scene->label;
 		$cena->description = $scene->description;
-		$camera = new App\Camera();
-		$camera->position = new App\Vec3();
+		$camera = new Camera();
+		$camera->position = new Vec3();
 		$camera->position->x = $scene->camera_position_x+0.00;
 	    $camera->position->y = $scene->camera_position_y+0.00;
 	    $camera->position->z = $scene->camera_position_z+0.00;
-	    $camera->dop = new App\Vec3();
+	    $camera->dop = new Vec3();
 	    $camera->dop->x = $scene->camera_dop_x+0.00;
 	    $camera->dop->y = $scene->camera_dop_y+0.00;
 	    $camera->dop->z = $scene->camera_dop_z+0.00;
-	    $camera->vup = new App\Vec3();
+	    $camera->vup = new Vec3();
 	    $camera->vup->x = $scene->camera_vup_x+0.00;
 	    $camera->vup->y = $scene->camera_vup_y+0.00;
 	    $camera->vup->z = $scene->camera_vup_z+0.00;
 	    $camera->angle_view = $scene->camera_angle_view+0.00;
 	    $cena->camera = $camera;
 
-	    $light = new App\Light();
-	    $light->position = new App\Vec3();
+	    $light = new Light();
+	    $light->position = new Vec3();
 	    $light->position->x = $scene->light_position_x+0.00;
 	    $light->position->y = $scene->light_position_y+0.00;
 	    $light->position->z = $scene->light_position_z+0.00;
-	    $light->color = new App\Color();
+	    $light->color = new Color();
 	    $light->color->r = $scene->light_color_r+0.00;
 	    $light->color->g = $scene->light_color_g+0.00;
 	    $light->color->b = $scene->light_color_b+0.00;
 	    $light->color->a = $scene->light_color_a+0.00;
 	    $cena->light = $light;
 
-	    $actor = new App\Actor();
+	    $actor = new Actor();
 		$actor->numberOfVertices = $scene->numberOfVertices;
 	  	$actor->numberOfNormals = $scene->numberOfNormals;
 	  	$actor->numberOfTriangles = $scene->numberOfTriangles;
@@ -88,18 +95,17 @@ class apiController extends Controller
 	  	return $cena;
 	}
 
-
-
 	private function tratarMaterial(&$scene) {
-		$material = new App\Material();
+		$material = new Material();
 		$material->ns = 0.00;
 		$material->tr = 0.00;
+		$material->map_kd = url().'/textures/'.$scene->map_kd;
 		$campos = explode(PHP_EOL, $scene->materials);
 		foreach ($campos as $linha) {
 		    $elementos = explode(' ', $linha);
 		    switch ($elementos[0]) {
 		        case 'Ka': // cor do ambiente
-		        	$ka = new App\Color();
+		        	$ka = new Color();
 		        	$ka->r = $elementos[1]+0.00;
 		        	$ka->g = $elementos[2]+0.00;
 		        	$ka->b = $elementos[3]+0.00;
@@ -108,7 +114,7 @@ class apiController extends Controller
 		            break;
 		        
 		        case 'Kd': // cor difusa
-		        	$kd = new App\Color();
+		        	$kd = new Color();
 		        	$kd->r = $elementos[1]+0.00;
 		        	$kd->g = $elementos[2]+0.00;
 		        	$kd->b = $elementos[3]+0.00;
@@ -117,7 +123,7 @@ class apiController extends Controller
 		            break;
 
 		        case 'Ks': // cor specular
-		        	$ks = new App\Color();
+		        	$ks = new Color();
 		        	$ks->r = $elementos[1]+0.00;
 		        	$ks->g = $elementos[2]+0.00;
 		        	$ks->b = $elementos[3]+0.00;
@@ -153,7 +159,7 @@ class apiController extends Controller
 		    $elementos = explode(' ', trim($linha));
 		    switch ($elementos[0]) {
 		        case 'v': // vertice
-		            $vertice = new App\Vec3();
+		            $vertice = new Vec3();
 		            $vertice->x = $elementos[1]+0.00;
 		            $vertice->y = $elementos[2]+0.00;
 		            $vertice->z = $elementos[3]+0.00;
@@ -162,7 +168,7 @@ class apiController extends Controller
 		            break;
 		        
 		        case 'vn': // vertice normal
-		            $vn = new App\Vec3();
+		            $vn = new Vec3();
 		            $vn->x = $elementos[1]+0.00;
 		            $vn->y = $elementos[2]+0.00;
 		            $vn->z = $elementos[3]+0.00;
@@ -171,7 +177,7 @@ class apiController extends Controller
 		            break;
 
 		        case 'vt': // vertice textures
-		            $vt = new App\Vec3();
+		            $vt = new Vec3();
 		            $vt->x = $elementos[1]+0.00;
 		            $vt->y = $elementos[2]+0.00;
 		            if (count($elementos)>3) {
@@ -231,7 +237,7 @@ class apiController extends Controller
 			            				$vn2 = 0.00;
 			            			}  
 
-					                $t = new App\Triangle();
+					                $t = new Triangle();
 					                $t->v0 = $v0-1;
 					                $t->v1 = $v1-1;
 					                $t->v2 = $v2-1;
@@ -249,7 +255,7 @@ class apiController extends Controller
 			            			break;
 			            	}	
 		            	} else {
-			                $t = new App\Triangle();
+			                $t = new Triangle();
 			                $t->v0 = $triangles[$scene->numberOfTriangles-1]->v0;
 			                $t->v1 = $triangles[$scene->numberOfTriangles-1]->v2;
 			                $t->v2 = $verticesFace[0]-1;
