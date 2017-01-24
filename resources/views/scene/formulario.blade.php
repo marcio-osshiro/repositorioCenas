@@ -197,7 +197,6 @@
     $("#map_kd").val('');
     $("#arquivo").val('');
     $("#imagem").attr('src', '');
-
   }
 
 </script>

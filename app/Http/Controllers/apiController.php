@@ -156,6 +156,7 @@ class apiController extends Controller
 		$colors = array();
 		$campos = explode(PHP_EOL, $scene->waveFront);
 		foreach ($campos as $linha) {
+			$linha = preg_replace('/\s\s+/', ' ', $linha);
 		    $elementos = explode(' ', trim($linha));
 		    switch ($elementos[0]) {
 		        case 'v': // vertice
