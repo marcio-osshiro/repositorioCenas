@@ -79,16 +79,27 @@ class apiController extends Controller
 
 	    $actor = new Actor();
 		$actor->numberOfVertices = $scene->numberOfVertices;
-	  	$actor->numberOfNormals = $scene->numberOfNormals;
+	  	//$actor->numberOfNormals = $scene->numberOfNormals;
+		if ($scene->numberOfNormals>0) {
+		  $actor->numberOfNormals = $scene->numberOfVertices;
+		} else {
+			$actor->numberOfNormals = 0;
+		}
 	  	$actor->numberOfTriangles = $scene->numberOfTriangles;
 	  	$actor->numberOfColors = $scene->numberOfColors;
-	  	$actor->numberOfTextures = $scene->numberOfTextures;
+	  	if ($scene->numberOfTextures>0) {
+	  	//$actor->numberOfTextures = $scene->numberOfTextures;
+	  	  $actor->numberOfTextures = $scene->numberOfVertices;
+	  	} else {
+	  		$actor->numberOfTextures = 0;
+	  	}  
 	  	$actor->material = $scene->material;
 	  	$actor->vertices = $scene->vertices;
 	  	$actor->triangles = $scene->triangles;
 	  	$actor->normals = $scene->normals;
 	  	$actor->colors = $scene->colors;
 	  	$actor->textures = $scene->textures;
+	  	//$actor->textures1 = $scene->textures1;
 	  	
 	  	$cena->actor = $actor;
 
@@ -150,9 +161,12 @@ class apiController extends Controller
 
 	private function tratarWaveFront(&$scene) {
 		$vertices = array();
+
 		$triangles = array();
 		$normals = array();
+		$normals1 = array();
 		$textures = array();
+		$textures1 = array();
 		$colors = array();
 		$campos = explode(PHP_EOL, $scene->waveFront);
 		foreach ($campos as $linha) {
@@ -166,6 +180,19 @@ class apiController extends Controller
 		            $vertice->z = $elementos[3]+0.00;
 		            $scene->numberOfVertices++;
 		            $vertices[] = $vertice;
+
+		            $vn = new Vec3();
+		            $vn->x = -1;
+		            $vn->y = -1;
+		            $vn->z = -1;
+		            $normals1[] = $vn;
+
+		            $vt = new Vec3();
+		            $vt->x = -1;
+		            $vt->y = -1;
+		            $vt->z = -1;
+		            $textures1[] = $vt;
+
 		            break;
 		        
 		        case 'vn': // vertice normal
@@ -251,6 +278,26 @@ class apiController extends Controller
 					                $t->vn1 = $vn1-1;
 					                $t->vn2 = $vn2-1;
 
+					                if ($t->vn0>=0) {
+					                    $normals1[$t->v0] = $normals[$t->vn0];	
+					                } 
+					                if ($t->vn1>=0) {
+					                	$normals1[$t->v1] = $normals[$t->vn1];		
+					                }  
+					                if ($t->vn2>=0) {
+					                	$normals1[$t->v2] = $normals[$t->vn2];		
+					                }
+
+					                if ($t->vt0>=0) {
+					                    $textures1[$t->v0] = $textures[$t->vt0];	
+					                } 
+					                if ($t->vt1>=0) {
+					                	$textures1[$t->v1] = $textures[$t->vt1];		
+					                }  
+					                if ($t->vt2>=0) {
+					                	$textures1[$t->v2] = $textures[$t->vt2];		
+					                }
+					                
 					                $triangles[] = $t;
 				            		$scene->numberOfTriangles++;
 			            			break;
@@ -269,7 +316,6 @@ class apiController extends Controller
 			                } else {
 			                	$t->vt2 = -1;
 			                }  
-			                //$t->vt2 = ($verticesFace[1]>0? $verticesFace[2]-1:0.00);
 
 			                $t->vn0 = $triangles[$scene->numberOfTriangles-1]->vn0;
 			                $t->vn1 = $triangles[$scene->numberOfTriangles-1]->vn2;
@@ -278,6 +324,26 @@ class apiController extends Controller
 			                } else {
 			                	$t->vn2 = -1;
 			                }  
+
+			                if ($t->vn0>=0) {
+			                    $normals1[$t->v0] = $normals[$t->vn0];	
+			                } 
+			                if ($t->vn1>=0) {
+			                	$normals1[$t->v1] = $normals[$t->vn1];		
+			                }  
+			                if ($t->vn2>=0) {
+			                	$normals1[$t->v2] = $normals[$t->vn2];		
+			                }
+
+			                if ($t->vt0>=0) {
+			                    $textures1[$t->v0] = $textures[$t->vt0];	
+			                } 
+			                if ($t->vt1>=0) {
+			                	$textures1[$t->v1] = $textures[$t->vt1];		
+			                }  
+			                if ($t->vt2>=0) {
+			                	$textures1[$t->v2] = $textures[$t->vt2];		
+			                }
 
 			                $triangles[] = $t;
 		            		$scene->numberOfTriangles++;
@@ -291,8 +357,13 @@ class apiController extends Controller
 		}
 		$scene->vertices = $vertices;
 		$scene->triangles = $triangles;
-		$scene->normals = $normals;
-		$scene->textures = $textures;
+		if (count($normals)>0) {
+		  $scene->normals = $normals1;
+		} else {
+			$scene->normals = array();
+		}  
+		$scene->textures = $textures1;
+		//$scene->textures1 = $textures;
 		$scene->colors = $colors;
 	}
 }
