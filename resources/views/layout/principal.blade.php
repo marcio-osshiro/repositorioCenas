@@ -9,26 +9,28 @@
 
         <title>UFMS</title>
 </head>
-<body>
-  <div class="container">
+	
+<div class="header container">
 	<nav class="navbar navbar-default">
 	  <div class="container-fluid">
-
 		<div class="navbar-header">      
-		  <a class="navbar-brand" href="#">UFMS - FACOM</a>
+		  <a class="navbar-brand" href="http://www.ufms.br">UFMS - FACOM</a>
 		</div>
-
 	    <ul class="nav navbar-nav navbar-right">
-	      <li><a href="#">Programa de Pós-Graduação</a></li>
+	      <li><a class="navbar-brand" href="http://facom.ufms.br">Programa de Pós-Graduação</a></li>
 	    </ul>
 	  </div>
 	</nav>
-
-    @yield('conteudo')
-	
-	<footer class="footer">
-	    <p>Disciplina de Computação Gráfica</p>
-	</footer>
-  </div>
+</div>
+<body class="container">
+	<div>
+		@yield('conteudo')	
+	</div>
 </body>
+
+<footer class="footer container">
+    <p align="center">Disciplina de Computação Gráfica</p>
+</footer>
+
+
 </html>

@@ -99,6 +99,7 @@ class apiController extends Controller
 	  	$actor->normals = $scene->normals;
 	  	$actor->colors = $scene->colors;
 	  	$actor->textures = $scene->textures;
+	  	$actor->fio_arame = $scene->fio_arame;
 	  	//$actor->textures1 = $scene->textures1;
 	  	
 	  	$cena->actor = $actor;

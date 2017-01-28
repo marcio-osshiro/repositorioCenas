@@ -162,6 +162,21 @@
         </h2>
       <div id="collapse4" class="panel-collapse collapse">
         <div class="form-group">
+          <label>Visualizado como Fio de Arame</label>
+          <div class="radio">
+            <label>
+              <input type="radio" name="fio_arame" id="fioArame1" value="1" {{$scene->fio_arame==1?"checked":""}}>
+              Sim
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="fio_arame" id="fioArame1" value="0" {{$scene->fio_arame==0?"checked":""}}>
+              Não
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
           <label>Malha(insira a malha de triângulos no formato obj)</label>
           <textarea name="waveFront" class="form-control" rows="5" >{{ old('waveFront',$scene->waveFront) }}</textarea>
         </div>

@@ -10,10 +10,12 @@ class Actor
   	public $numberOfTriangles;
   	public $numberOfColors;
   	public $numberOfTextures;
+    public $fio_arame;
     public $material;
   	public $vertices;
   	public $triangles;
   	public $normals;
   	public $colors;
   	public $textures;
+
 }
