@@ -12,7 +12,7 @@ use Input;
 class sceneController extends Controller
 {
     public function lista(){
-        $scenes = Scene::all();
+        $scenes = Scene::orderBy('label')->get();
         return view('scene.listagem')->with('scenes', $scenes);
     }
 

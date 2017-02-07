@@ -19,7 +19,7 @@ use App\Actor;
 class apiController extends Controller
 {
     public function lista(){
-		  $scenes =  DB::table('scene')->select('id', 'label', 'description');
+		  $scenes =  DB::table('scene')->select('id', 'label', 'description')->orderBy('label');
 		  return $scenes->get();
     }
 
@@ -40,7 +40,7 @@ class apiController extends Controller
 
     public function buscaLabel($label) {
 	  return DB::table('scene')->select('id', 'label', 'description')->
-					  where('label', 'like', '%'.$label.'%')->get();
+					  where('label', 'like', '%'.$label.'%')->orderBy('label')->get();
     }
 
 
@@ -87,18 +87,19 @@ class apiController extends Controller
 		}
 	  	$actor->numberOfTriangles = $scene->numberOfTriangles;
 	  	$actor->numberOfColors = $scene->numberOfColors;
-	  	if ($scene->numberOfTextures>0) {
-	  	//$actor->numberOfTextures = $scene->numberOfTextures;
-	  	  $actor->numberOfTextures = $scene->numberOfVertices;
-	  	} else {
-	  		$actor->numberOfTextures = 0;
-	  	}  
 	  	$actor->material = $scene->material;
 	  	$actor->vertices = $scene->vertices;
 	  	$actor->triangles = $scene->triangles;
 	  	$actor->normals = $scene->normals;
 	  	$actor->colors = $scene->colors;
 	  	$actor->textures = $scene->textures;
+	  	if ($scene->numberOfTextures>0) {
+	  	//$actor->numberOfTextures = $scene->numberOfTextures;
+	  	  $actor->numberOfTextures = $scene->numberOfVertices;
+	  	} else {
+	  		$actor->numberOfTextures = 0;
+	  		$actor->textures = array();
+	  	}  
 	  	$actor->fio_arame = $scene->fio_arame;
 	  	//$actor->textures1 = $scene->textures1;
 	  	
